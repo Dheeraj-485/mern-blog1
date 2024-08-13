@@ -1,0 +1,13 @@
+.loginBtn {
+  padding: 0.7rem;
+  background-color: rgba(252, 163, 17, 0.7);
+  border: none;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.loginBtn:hover {
+  background-color: rgba(252, 163, 17, 0.8);
+}
