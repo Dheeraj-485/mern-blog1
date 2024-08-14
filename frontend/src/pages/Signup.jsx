@@ -20,7 +20,7 @@ const Signup = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const url = "http://localhost:8000/user/sign-up";
+    const url = "https://mern-blog1-1-z0ns.onrender.com/user/sign-up";
     try {
       const response = await axios.post(url, user);
       toast.success("Account Created Successfully.", {
