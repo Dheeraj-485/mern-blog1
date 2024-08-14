@@ -7,7 +7,7 @@ const Comment = () => {
   const { id } = useParams();
 
   async function getComments() {
-    const url = `http://localhost:8000/comment/get-blog-comments/${id}`;
+    const url = `https://mern-blog1-1-z0ns.onrender.com/comment/get-blog-comments/${id}`;
     try {
       const response = await axios.get(url);
       const data = response?.data?.comments;
