@@ -7,7 +7,7 @@ import { useState } from "react"
 const MyBlog = ({ id, title, description, imageUrl }) => {
   const navigate = useNavigate()
   const handleDelete = async () => {
-    const url = `http://localhost:8000/blog/delete-blog/${id}`
+    const url = `https://mern-blog1-1-z0ns.onrender.com/blog/delete-blog/${id}`
 
     try {
       const response = await axios.delete(url, {
