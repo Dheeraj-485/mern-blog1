@@ -10,7 +10,7 @@ const BlogDetails = () => {
   const { id } = useParams();
 
   async function fetchBlogDetails() {
-    const urlForBlog = `http://localhost:8000/blog/blog-details/${id}`;
+    const urlForBlog = `https://mern-blog1-1-z0ns.onrender.com/blog/blog-details/${id}`;
     try {
       const response = await axios.get(urlForBlog);
       const blogData = response?.data?.blog;
