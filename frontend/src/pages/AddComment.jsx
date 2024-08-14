@@ -11,7 +11,7 @@ const AddComment = ({ blogId, userId }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const url = "http://localhost:8000/comment/add-comment";
+    const url = "https://mern-blog1-1-z0ns.onrender.com/comment/add-comment";
     const commentData = {
       content: comment.content,
       user: userId,
