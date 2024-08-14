@@ -14,7 +14,7 @@ const EditBlog = () => {
   const [image, setImage] = useState()
 
   async function getBlogData() {
-    const url = `http://localhost:8000/blog/blog-details/${id}`
+    const url = `https://mern-blog1-1-z0ns.onrender.com/blog/blog-details/${id}`
 
     try {
       const response = await axios.get(url)
