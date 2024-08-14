@@ -6,7 +6,7 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState(null);
 
   async function getAllBlogs() {
-    const url = "http://localhost:8000/blog/get-all-blogs";
+    const url = "https://mern-blog1-1-z0ns.onrender.com/blog/get-all-blogs";
 
     try {
       const allBlogs = await axios.get(url);
