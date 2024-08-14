@@ -5,7 +5,7 @@ const MyBlogs = () => {
   const [myBlogs, setMyBlogs] = useState(null)
 
   async function fetchBlogs() {
-    const url = "http://localhost:8000/blog/get-my-blogs"
+    const url = "https://mern-blog1-1-z0ns.onrender.com/blog/get-my-blogs"
 
     try {
       const response = await fetch(url, {
