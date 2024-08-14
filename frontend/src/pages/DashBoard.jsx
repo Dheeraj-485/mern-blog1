@@ -10,7 +10,7 @@ function DashBoard() {
   const [blogData, setBlogData] = useState(null);
 
   async function fetchUserData() {
-    const url = "http://localhost:8000/user/get-user-details";
+    const url = "https://mern-blog1-1-z0ns.onrender.com/user/get-user-details";
 
     try {
       const response = await axios.get(url, {
@@ -26,7 +26,7 @@ function DashBoard() {
   }
 
   async function fetchUserBlogs() {
-    const url = "http://localhost:8000/blog/get-my-blogs";
+    const url = "https://mern-blog1-1-z0ns.onrender.com/blog/get-my-blogs";
     try {
       const response = await axios.get(url, {
         headers: {
