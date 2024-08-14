@@ -8,7 +8,7 @@ const Comment = ({ blogId, userId }) => {
   const { id } = useParams()
 
   async function getComments() {
-    const url = `http://localhost:8000/comment/get-blog-comments/${id}`
+    const url = `https://mern-blog1-1-z0ns.onrender.com/comment/get-blog-comments/${id}`
     try {
       const response = await axios.get(url)
       const data = response.data.comments
@@ -28,7 +28,7 @@ const Comment = ({ blogId, userId }) => {
 
   const handleReplySubmit = async (parentCommentId) => {
     try {
-      await axios.post(`http://localhost:8000/comment/add`, {
+      await axios.post(`https://mern-blog1-1-z0ns.onrender.com/comment/add`, {
         blogId: id,
         userId: userId,
         parentCommentId,
