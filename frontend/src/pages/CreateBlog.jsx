@@ -24,7 +24,7 @@ const CreateBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = "http://localhost:8000/blog/create-blog";
+    const url = "https://mern-blog1-1-z0ns.onrender.com/blog/create-blog";
     const formData = new FormData();
     formData.append("image", image);
     formData.append("title", blogData.title);
