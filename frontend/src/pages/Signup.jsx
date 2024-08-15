@@ -28,7 +28,17 @@ const Signup = () => {
       });
       navigate("/login");
     } catch (error) {
-      toast.error(`${error.message}`, { position: "top-center" });
+     if (
+        error?.response &&
+        error?.response?.data &&
+        error?.response?.data?.message
+      ) {
+        toast.error(error?.response?.data?.message, { position: "top-center" });
+      } else {
+        toast.error("Something went wrong. Please try again later.", {
+          position: "top-center",
+        });
+      }
     }
     setIsSubmitting(false);
   };
