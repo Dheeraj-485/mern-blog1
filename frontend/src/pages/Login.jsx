@@ -3,6 +3,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import { BASE_URL } from "../BaseUrl";
 
 const Login = () => {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -17,7 +18,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const url = "https://mern-blog1-1-z0ns.onrender.com/user/sign-in";
+    const url = `${BASE_URL}user/sign-in`;
     try {
       const response = await axios.post(url, user);
       const token = response?.data?.token;
