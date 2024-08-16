@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Comment, AddComment } from "./index";
+import { BASE_URL } from "../BaseUrl";
 
 const BlogDetails = () => {
   const [blogDetails, setBlogDetails] = useState(null);
@@ -10,7 +11,7 @@ const BlogDetails = () => {
   const { id } = useParams();
 
   async function fetchBlogDetails() {
-    const urlForBlog = `https://mern-blog1-1-z0ns.onrender.com/blog/blog-details/${id}`;
+    const urlForBlog = `${BASE_URL}blog/blog-details/${id}`;
     try {
       const response = await axios.get(urlForBlog);
       const blogData = response?.data?.blog;
@@ -45,7 +46,7 @@ const BlogDetails = () => {
               <span className="fw-bold">{userDetails?.name}</span>
             </div>
             <img
-              src={require(`../images/${blogDetails?.coverImage}`)}
+              src={blogDetails.coverImage}
               alt="Cover"
               className="img-fluid rounded mb-3"
               style={{ maxHeight: "500px", objectFit: "cover" }}
