@@ -35,7 +35,7 @@ const BlogDetails = () => {
         <div className="card border-light shadow-sm mb-4">
           <div className="card-body">
             <h3 className="card-title mb-3">{blogDetails?.title}</h3>
-            <div className="d-flex align-items-center mb-4">
+            <div className="d-flex justify-content-center align-items-center mb-4">
               <img
                 src={require(`../images/default.jpeg`)}
                 alt="User"
