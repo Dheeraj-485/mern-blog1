@@ -24,8 +24,9 @@ const Blogs = () => {
   }, []);
   return (
     <div className="container mt-3">
+       <h4 className="d.flex justify-content-between mt-4 mb-4">All Blogs</h4>
       <div className="d-flex justify-content-around  row row-cols-4">
-      <h4>All Blogs</h4>
+      
         {blogs &&
           blogs.map((blog) => (
             <Blog
