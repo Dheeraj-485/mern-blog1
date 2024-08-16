@@ -25,7 +25,7 @@ const Blogs = () => {
   return (
     <div className="container mt-3">
       <h4 className="mt-4 mb-4">All Blogs</h4>
-      <div className="row row-cols-4">
+      <div className="d-flex justify-content-around row row-cols-4">
         {blogs &&
           blogs.map((blog) => (
             <Blog
