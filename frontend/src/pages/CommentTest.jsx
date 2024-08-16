@@ -1,45 +1,46 @@
-import axios from "axios"
-import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { BASE_URL } from "../BaseUrl";
 
 const Comment = ({ blogId, userId }) => {
-  const [comments, setComments] = useState([])
-  const [reply, setReply] = useState({})
-  const { id } = useParams()
+  const [comments, setComments] = useState([]);
+  const [reply, setReply] = useState({});
+  const { id } = useParams();
 
   async function getComments() {
-    const url = `https://mern-blog1-1-z0ns.onrender.com/comment/get-blog-comments/${id}`
+    const url = `https://mern-blog1-1-z0ns.onrender.com/comment/get-blog-comments/${id}`;
     try {
-      const response = await axios.get(url)
-      const data = response.data.comments
-      setComments(data)
+      const response = await axios.get(url);
+      const data = response.data.comments;
+      setComments(data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   useEffect(() => {
-    getComments()
-  }, [id])
+    getComments();
+  }, [id]);
 
   const handleReplyChange = (e, commentId) => {
-    setReply({ ...reply, [commentId]: e.target.value })
-  }
+    setReply({ ...reply, [commentId]: e.target.value });
+  };
 
   const handleReplySubmit = async (parentCommentId) => {
     try {
-      await axios.post(`https://mern-blog1-1-z0ns.onrender.com/comment/add`, {
+      await axios.post(`${BASE_URL}comment/add`, {
         blogId: id,
         userId: userId,
         parentCommentId,
         content: reply[parentCommentId],
-      })
-      setReply({ ...reply, [parentCommentId]: "" })
-      getComments()
+      });
+      setReply({ ...reply, [parentCommentId]: "" });
+      getComments();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const renderComments = (comments, parentId = null) => {
     return comments
@@ -76,8 +77,8 @@ const Comment = ({ blogId, userId }) => {
           )}
           {renderComments(comments, comment._id)}
         </div>
-      ))
-  }
+      ));
+  };
 
   return (
     <>
@@ -88,7 +89,7 @@ const Comment = ({ blogId, userId }) => {
         renderComments(comments)
       )}
     </>
-  )
-}
+  );
+};
 
-export default Comment
+export default Comment;
