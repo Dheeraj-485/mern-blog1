@@ -1,87 +1,66 @@
-import axios from "axios"
-import { useEffect } from "react"
-import { useState } from "react"
-import toast from "react-hot-toast"
-import { useNavigate, useParams } from "react-router-dom"
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "../BaseUrl";
 
 const EditBlog = () => {
-  const { id } = useParams()
+  const { id } = useParams();
   const [blogData, setBlogData] = useState({
     title: "",
     description: "",
     coverImage: "",
-  })
-  const [image, setImage] = useState()
+  });
+  const [image, setImage] = useState();
+  const [imagePreview, setImagePreview] = useState();
 
   async function getBlogData() {
-    const url = `https://mern-blog1-1-z0ns.onrender.com/blog/blog-details/${id}`
+    const url = `${BASE_URL}blog/blog-details/${id}`;
 
     try {
-      const response = await axios.get(url)
-      const data = response?.data?.blog
+      const response = await axios.get(url);
+      const data = response?.data?.blog;
       setBlogData({
         ...blogData,
         title: data?.title,
         description: data?.description,
         coverImage: data?.coverImage.toString(),
-      })
+      });
       //   console.log(response)
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   useEffect(() => {
-    getBlogData()
-  }, [])
+    getBlogData();
+  }, []);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setBlogData({ ...blogData, [name]: value })
-  }
+    const { name, value } = e.target;
+    setBlogData({ ...blogData, [name]: value });
+  };
 
   const handleImageChange = (e) => {
-    console.log(e.target.files[0])
-    setImage(e.target.files[0])
-  }
-
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault()
-  //     const url = "http://localhost:8000/blog/create-blog"
-  //     const formData = new FormData()
-  //     formData.append("image", image)
-  //     formData.append("title", blogData.title)
-  //     formData.append("description", blogData.description)
-
-  //     try {
-  //       const response = await axios.post(url, formData, {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: localStorage.getItem("token"),
-  //         },
-  //       })
-
-  //       console.log(response)
-  //       toast.success("Blog created Successfully.", { position: "top-center" })
-  //       navigate("/")
-  //       setBlogData({ title: "", description: "" })
-  //       setImage(null)
-  //     } catch (error) {
-  //       toast.error("Something went wrong.", { position: "top-center" })
-  //     }
-  //   }
+    console.log(e.target.files[0]);
+    const file = e.target.files[0];
+    setImage(file);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    console.log(image)
-    const url = `http://localhost:8000/blog/edit-blog/${id}`
-    console.log(url)
-    const formData = new FormData()
-    formData.append("image", image)
-    formData.append("title", blogData.title)
-    formData.append("description", blogData.description)
+    e.preventDefault();
+    console.log(image);
+    const url = `${BASE_URL}blog/edit-blog/${id}`;
+    console.log(url);
+    const formData = new FormData();
+    formData.append("title", blogData.title);
+    formData.append("description", blogData.description);
+    if (image) {
+      formData.append("coverImage", image);
+    }
 
     try {
       const response = await axios.patch(url, formData, {
@@ -89,16 +68,16 @@ const EditBlog = () => {
           "Content-Type": "multipart/form-data",
           Authorization: localStorage.getItem("token"),
         },
-      })
-      console.log(response)
-      toast.success("Blog updated Successfully.", { position: "top-center" })
-      navigate("/")
-      setBlogData({ title: "", description: "" })
-      setImage(null)
+      });
+      console.log(response);
+      toast.success("Blog updated Successfully.", { position: "top-center" });
+      navigate("/");
+      setBlogData({ title: "", description: "" });
+      setImage(null);
     } catch (error) {
-      toast.error("Something went wrong.", { position: "top-center" })
+      toast.error("Something went wrong.", { position: "top-center" });
     }
-  }
+  };
   return (
     <>
       {blogData && (
@@ -122,14 +101,14 @@ const EditBlog = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="image" className="form-label">
-              Image
+              Image (Optional)
             </label>
             <input
               type="file"
               className="form-control"
               id="image"
               name="image"
-              //   value={image}
+              // value={imagePreview}
               onChange={handleImageChange}
             />
           </div>
@@ -157,6 +136,6 @@ const EditBlog = () => {
         </form>
       )}
     </>
-  )
-}
-export default EditBlog
+  );
+};
+export default EditBlog;
