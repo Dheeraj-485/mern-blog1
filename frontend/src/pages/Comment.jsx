@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { BASE_URL } from "../BaseUrl";
 
 const Comment = () => {
   const [comments, setComments] = useState([]);
   const { id } = useParams();
 
   async function getComments() {
-    const url = `https://mern-blog1-1-z0ns.onrender.com/comment/get-blog-comments/${id}`;
+    const url = `${BASE_URL}comment/get-blog-comments/${id}`;
     try {
       const response = await axios.get(url);
       const data = response?.data?.comments;
