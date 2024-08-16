@@ -29,7 +29,7 @@ function Home() {
           <img src={HomePage} alt="Home Page" className="img-fluid" />
         </div>
       </div>
-      <div className="d-flex justify-content-around ">
+      <div className="d-flex justify-content-around mx-4">
 
       <Blogs />
       </div>
