@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import pic from "../images/1719401437108sample_6.jpg";
+import { BASE_URL } from "../BaseUrl";
 
 const CreateBlog = () => {
   const [blogData, setBlogData] = useState({
@@ -9,6 +11,8 @@ const CreateBlog = () => {
     description: "",
   });
   const [image, setImage] = useState();
+  const [imagePreview, setImagePreview] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -18,15 +22,22 @@ const CreateBlog = () => {
   };
 
   const handleImageChange = (e) => {
-    console.log(e.target.files[0]);
-    setImage(e.target.files[0]);
+    const file = e.target.files[0];
+    setImage(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      // setImage(reader.result);
+      setImagePreview(file);
+    };
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = "https://mern-blog1-1-z0ns.onrender.com/blog/create-blog";
+    setLoading(true);
+    const url = `${BASE_URL}blog/create-blog`;
     const formData = new FormData();
-    formData.append("image", image);
+    formData.append("coverImage", image);
     formData.append("title", blogData.title);
     formData.append("description", blogData.description);
 
@@ -44,7 +55,18 @@ const CreateBlog = () => {
       setBlogData({ title: "", description: "" });
       setImage(null);
     } catch (error) {
-      toast.error("Something went wrong.", { position: "top-center" });
+      // toast.error("Something went wrong.", { position: "top-center" });
+      if (
+        error?.response &&
+        error?.response?.data &&
+        error?.response?.data?.message
+      ) {
+        toast.error(error?.response?.data?.message, { position: "top-center" });
+      } else {
+        toast.error("Something went wrong. Please try again later.", {
+          position: "top-center",
+        });
+      }
     }
   };
   return (
@@ -71,6 +93,25 @@ const CreateBlog = () => {
           <label htmlFor="image" className="form-label">
             Image
           </label>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <input
+              type="file"
+              onChange={handleImageChange}
+              style={{ border: "none" }}
+            />
+          </div>
+        </div>
+        {/* <div className="mb-3">
+          <label htmlFor="image" className="form-label">
+            Image
+          </label>
+          <img
+            src={imagePreview ? `${setImagePreview}` : pic}
+            alt="mainImg"
+            className="mainImg"
+            height="20px"
+            width="20px"
+          />
           <input
             type="file"
             className="form-control"
@@ -79,7 +120,7 @@ const CreateBlog = () => {
             onChange={handleImageChange}
             required
           />
-        </div>
+        </div> */}
         <div className="mb-3 mt-4">
           <label htmlFor="description" className="form-label">
             Description
@@ -99,7 +140,7 @@ const CreateBlog = () => {
         </div>
 
         <button type="submit" className="btn btn-primary">
-          Submit
+          {loading ? "Submitting..." : "Submit"}
         </button>
       </form>
     </>
