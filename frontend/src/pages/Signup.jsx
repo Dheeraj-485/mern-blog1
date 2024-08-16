@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "./Signup.css";
+import { BASE_URL } from "../BaseUrl";
 
 const Signup = () => {
   const [user, setUser] = useState({ name: "", email: "", password: "" });
@@ -20,15 +21,17 @@ const Signup = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const url = "https://mern-blog1-1-z0ns.onrender.com/user/sign-up";
+    const url = `${BASE_URL}user/sign-up`;
     try {
       const response = await axios.post(url, user);
       toast.success("Account Created Successfully.", {
         position: "top-center",
       });
+
       navigate("/login");
     } catch (error) {
-     if (
+      // toast.error(`${error.message}`, { position: "top-center" });
+      if (
         error?.response &&
         error?.response?.data &&
         error?.response?.data?.message
