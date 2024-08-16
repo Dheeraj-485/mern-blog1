@@ -1,6 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { BASE_URL } from "../BaseUrl";
 
 const AddComment = ({ blogId, userId }) => {
   const [comment, setComment] = useState({
@@ -11,7 +12,7 @@ const AddComment = ({ blogId, userId }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const url = "https://mern-blog1-1-z0ns.onrender.com/comment/add-comment";
+    const url = `${BASE_URL}comment/add-comment`;
     const commentData = {
       content: comment.content,
       user: userId,
