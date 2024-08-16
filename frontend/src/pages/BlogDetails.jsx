@@ -49,7 +49,7 @@ const BlogDetails = () => {
               src={blogDetails.coverImage}
               alt="Cover"
               className="img-fluid rounded mb-3 d-flex justify-content-center"
-              style={{ maxHeight: "500px", objectFit: "cover" }}
+              style={{ maxHeight: "500px", objectFit: "cover",display:"flex",justifyContent:"center"}}
             />
             <div className="mb-4 p-3 bg-light border rounded">
               <h5 className="mb-2">Description</h5>
