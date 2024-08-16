@@ -1,54 +1,54 @@
-import { Link, Navigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Blog from "./Blog";
 import { BASE_URL } from "../BaseUrl";
 
-const MyBlog = ({ id, title, description, imageUrl }) => {
-  const navigate = useNavigate();
-  const handleDelete = async () => {
-    const url = `${BASE_URL}blog/delete-blog/${id}`;
+const MyBlogs = () => {
+  const [myBlogs, setMyBlogs] = useState(null);
+
+  async function fetchBlogs() {
+    const url = `${BASE_URL}blog/get-my-blogs`;
 
     try {
-      const response = await axios.delete(url, {
+      const response = await fetch(url, {
+        method: "GET",
         headers: {
+          "Content-Type": "application/json",
           Authorization: localStorage.getItem("token"),
         },
       });
-      console.log(response);
-      toast.success("Blog Deleted Successfully.", { position: "top-center" });
-      // Navigate("/dashboard")
-    } catch (error) {
-      // console.log(error)
-      toast.error("Something went Wrong.", { position: "top-center" });
-    }
-    // console.log("Blog Deleted Successfully.")
-  };
-  return (
-    <div className="card m-2 col" style={{ width: "18rem" }}>
-      <img
-        src={imageUrl}
-        className="card-img-top"
-        alt="Image"
-        width="200px"
-        height="200px"
-      />
 
-      <div className="card-body">
-        <h5 className="card-title">{title.slice(0, 30)}...</h5>
-        <p className="card-text">{description.slice(0, 50)}...</p>
-        <Link to={`/blogs/${id}`} href="#" className="btn btn-primary m-1">
-          Read
-        </Link>
-        <Link to={`/editblog/${id}`} href="#" className="btn btn-primary m-1">
-          Edit
-        </Link>
-        <button className="btn btn-primary m-1" onClick={handleDelete}>
-          Delete
-        </button>
+      const json = await response.json();
+      const data = json?.blogs;
+      setMyBlogs(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+  return (
+    <>
+      <h3>My Blogs</h3>
+      <div className="container m-2">
+        <div className="row row-cols-4">
+          {myBlogs ? (
+            myBlogs.map((blog) => (
+              <Blog
+                key={blog?._id}
+                id={blog?._id}
+                title={blog?.title}
+                description={blog?.description}
+                imageUrl={blog.coverImage}
+              />
+            ))
+          ) : (
+            <p>Oops, no Blog found.</p>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
-export default MyBlog;
+export default MyBlogs;
