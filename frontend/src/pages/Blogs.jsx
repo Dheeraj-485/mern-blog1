@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Blog from "./Blog";
+import { BASE_URL } from "../BaseUrl";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState(null);
 
   async function getAllBlogs() {
-    const url = "https://mern-blog1-1-z0ns.onrender.com/blog/get-all-blogs";
+    const url = `${BASE_URL}blog/get-all-blogs`;
 
     try {
       const allBlogs = await axios.get(url);
