@@ -45,12 +45,14 @@ const BlogDetails = () => {
               />
               <span className="fw-bold">{userDetails?.name}</span>
             </div>
+            <div className="d-flex justify-content-center mb-3">
             <img
               src={blogDetails.coverImage}
               alt="Cover"
-              className="img-fluid rounded mb-3 d-flex justify-content-center"
-              style={{ maxHeight: "500px", objectFit: "cover",display:"flex",justifyContent:"center"}}
+              className="img-fluid rounded mb-3 "
+              style={{ maxHeight: "500px", objectFit: "cover",display:"block"}}
             />
+              </div>
             <div className="mb-4 p-3 bg-light border rounded">
               <h5 className="mb-2">Description</h5>
               <p className="mb-0 text-muted">{blogDetails?.description}</p>
