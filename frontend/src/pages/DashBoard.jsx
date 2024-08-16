@@ -4,13 +4,14 @@ import { MyBlog } from "./index";
 import { useState, useEffect } from "react";
 // import "bootstrap/dist/css/bootstrap.min.css"
 import "../styles/Dashboard.css"; // Create a CSS file for custom styles
+import { BASE_URL } from "../BaseUrl";
 
 function DashBoard() {
   const [userData, setUserData] = useState(null);
   const [blogData, setBlogData] = useState(null);
 
   async function fetchUserData() {
-    const url = "https://mern-blog1-1-z0ns.onrender.com/user/get-user-details";
+    const url = `${BASE_URL}user/get-user-details`;
 
     try {
       const response = await axios.get(url, {
@@ -26,7 +27,7 @@ function DashBoard() {
   }
 
   async function fetchUserBlogs() {
-    const url = "https://mern-blog1-1-z0ns.onrender.com/blog/get-my-blogs";
+    const url = `${BASE_URL}blog/get-my-blogs`;
     try {
       const response = await axios.get(url, {
         headers: {
