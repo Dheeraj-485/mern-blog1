@@ -1,88 +1,141 @@
 import axios from "axios";
-import React from "react";
-import { MyBlog } from "./index";
-import { useState, useEffect } from "react";
-// import "bootstrap/dist/css/bootstrap.min.css"
-import "../styles/Dashboard.css"; // Create a CSS file for custom styles
+import { useEffect } from "react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../BaseUrl";
 
-function DashBoard() {
-  const [userData, setUserData] = useState(null);
-  const [blogData, setBlogData] = useState(null);
+const EditBlog = () => {
+  const { id } = useParams();
+  const [blogData, setBlogData] = useState({
+    title: "",
+    description: "",
+    coverImage: "",
+  });
+  const [image, setImage] = useState();
+  const [imagePreview, setImagePreview] = useState();
 
-  async function fetchUserData() {
-    const url = `${BASE_URL}user/get-user-details`;
+  async function getBlogData() {
+    const url = `${BASE_URL}blog/blog-details/${id}`;
 
     try {
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
+      const response = await axios.get(url);
+      const data = response?.data?.blog;
+      setBlogData({
+        ...blogData,
+        title: data?.title,
+        description: data?.description,
+        coverImage: data?.coverImage.toString(),
       });
-      const data = response?.data?.user;
-      setUserData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function fetchUserBlogs() {
-    const url = `${BASE_URL}blog/get-my-blogs`;
-    try {
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      });
-      const data = response?.data?.blogs;
-      setBlogData(data);
+      //   console.log(response)
     } catch (error) {
       console.log(error);
     }
   }
 
   useEffect(() => {
-    fetchUserData();
-    fetchUserBlogs();
+    getBlogData();
   }, []);
 
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setBlogData({ ...blogData, [name]: value });
+  };
+
+  const handleImageChange = (e) => {
+    console.log(e.target.files[0]);
+    const file = e.target.files[0];
+    setImage(file);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(image);
+    const url = `${BASE_URL}blog/edit-blog/${id}`;
+    console.log(url);
+    const formData = new FormData();
+    formData.append("title", blogData.title);
+    formData.append("description", blogData.description);
+    if (image) {
+      formData.append("coverImage", image);
+    }
+
+    try {
+      const response = await axios.patch(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      console.log(response);
+      toast.success("Blog updated Successfully.", { position: "top-center" });
+      navigate("/");
+      setBlogData({ title: "", description: "" });
+      setImage(null);
+    } catch (error) {
+      toast.error("Something went wrong.", { position: "top-center" });
+    }
+  };
   return (
     <>
-      <div className="dashboard">
-        <h3 className="text-center mb-4">Dashboard</h3>
+      {blogData && (
+        <form className="container mt-5" onSubmit={handleSubmit}>
+          <h4 className="m-2">Edit Blog</h4>
+          <div className="mb-3 mt-4">
+            <label htmlFor="title" className="form-label">
+              Title
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="title"
+              name="title"
+              aria-describedby="title"
+              placeholder="Enter title"
+              value={blogData.title}
+              onChange={handleInputChange}
+              required={true}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="image" className="form-label">
+              Image (Optional)
+            </label>
+            <input
+              type="file"
+              className="form-control"
+              id="image"
+              name="image"
+              // value={imagePreview}
+              onChange={handleImageChange}
+            />
+          </div>
+          <div className="mb-3 mt-4">
+            <label htmlFor="description" className="form-label">
+              Description
+            </label>
+            <textarea
+              className="form-control"
+              id="description"
+              name="description"
+              cols="10"
+              rows="5"
+              aria-describedby="description"
+              placeholder="Enter description"
+              value={blogData.description}
+              onChange={handleInputChange}
+              required={true}
+            ></textarea>
+          </div>
 
-        {userData && (
-          <div className="container user-info bg-light p-4 rounded shadow-sm mb-4">
-            <h4>Welcome Back, {userData.name}</h4>
-            <p>
-              <strong>Name:</strong> {userData.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {userData.email}
-            </p>
-          </div>
-        )}
-        <h4 className="text-center mb-4">My Blogs</h4>
-        <div className="container">
-          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            {blogData &&
-              blogData.map((blog) => (
-                <MyBlog
-                  key={blog._id}
-                  id={blog._id}
-                  title={blog.title}
-                  description={blog.description}
-                  imageUrl={blog.coverImage}
-                />
-              ))}
-          </div>
-        </div>
-      </div>
-      {!blogData ? (
-        <p className="container not-found">Oops, No Blogs Found.</p>
-      ) : null}
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      )}
     </>
   );
-}
-
-export default DashBoard;
+};
+export default EditBlog;
