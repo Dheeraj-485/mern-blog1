@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Blog.css";
+import { BASE_URL } from "../BaseUrl";
 
 const Blog = ({ id, title, description, imageUrl }) => {
   return (
@@ -13,11 +14,7 @@ const Blog = ({ id, title, description, imageUrl }) => {
       }}
     >
       <div className="blog-image-wrapper">
-        <img
-          src={require(`../images/${imageUrl}`)}
-          className="card-img-top"
-          alt="Image"
-        />
+        <img src={imageUrl} className="card-img-top" alt="Image" />
         <div className="image-overlay"></div>
       </div>
       <div className="card-body">
