@@ -1,33 +1,34 @@
-import { Link, Navigate } from "react-router-dom"
-import toast from "react-hot-toast"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { Link, Navigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { BASE_URL } from "../BaseUrl";
 
 const MyBlog = ({ id, title, description, imageUrl }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleDelete = async () => {
-    const url = `https://mern-blog1-1-z0ns.onrender.com/blog/delete-blog/${id}`
+    const url = `${BASE_URL}blog/delete-blog/${id}`;
 
     try {
       const response = await axios.delete(url, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
-      })
-      console.log(response)
-      toast.success("Blog Deleted Successfully.", { position: "top-center" })
+      });
+      console.log(response);
+      toast.success("Blog Deleted Successfully.", { position: "top-center" });
       // Navigate("/dashboard")
     } catch (error) {
       // console.log(error)
-      toast.error("Something went Wrong.", { position: "top-center" })
+      toast.error("Something went Wrong.", { position: "top-center" });
     }
     // console.log("Blog Deleted Successfully.")
-  }
+  };
   return (
     <div className="card m-2 col" style={{ width: "18rem" }}>
       <img
-        src={require(`../images/${imageUrl}`)}
+        src={imageUrl}
         className="card-img-top"
         alt="Image"
         width="200px"
@@ -48,6 +49,6 @@ const MyBlog = ({ id, title, description, imageUrl }) => {
         </button>
       </div>
     </div>
-  )
-}
-export default MyBlog
+  );
+};
+export default MyBlog;
