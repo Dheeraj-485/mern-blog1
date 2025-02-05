@@ -1,52 +1,75 @@
-import React from "react";
-import "./Footer.css";
+import { Link } from "react-router-dom";
 
-export const Footer = () => {
+const Footer = () => {
   return (
-    <footer className="bg-dark text-white p-4 text-center">
-      <div className="container">
+    <footer className="bg-dark text-light py-4 mt-5">
+      <div className="container text-center">
         <div className="row">
-          <div className="col-md-12">
-            <ul className="list-inline">
-              <li className="list-inline-item mx-3">
-                <a href="/" className="text-white">
-                  <i className="fas fa-home fa-lg"></i> Home
-                </a>
+          {/* Brand & Description */}
+          <div className="col-md-4 mb-3">
+            <h5 className="fw-bold">🚀 Blogs</h5>
+            <p className="text-muted small">
+              Discover amazing stories, ideas, and insights from creators around
+              the world.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div className="col-md-4 mb-3">
+            <h5 className="fw-bold">Quick Links</h5>
+            <ul className="list-unstyled">
+              <li>
+                <Link className="text-light text-decoration-none" to="/">
+                  🏠 Home
+                </Link>
               </li>
-              <li className="list-inline-item mx-3">
-                <a
-                  href="https://github.com"
-                  className="text-white"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fab fa-github fa-lg"></i> GitHub
-                </a>
+              <li>
+                <Link className="text-light text-decoration-none" to="/about">
+                  ℹ️ About
+                </Link>
               </li>
-              <li className="list-inline-item mx-3">
-                <a
-                  href="https://linkedin.com"
-                  className="text-white"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fab fa-linkedin fa-lg"></i> LinkedIn
-                </a>
+              <li>
+                <Link className="text-light text-decoration-none" to="/contact">
+                  📩 Contact
+                </Link>
               </li>
-              <li className="list-inline-item mx-3">
-                <a
-                  href="https://instagram.com"
-                  className="text-white"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i className="fab fa-instagram fa-lg"></i> Instagram
-                </a>
+              <li>
+                <Link className="text-light text-decoration-none" to="/privacy">
+                  🔒 Privacy Policy
+                </Link>
               </li>
             </ul>
           </div>
+
+          {/* Social Media Links */}
+          <div className="col-md-4">
+            <h5 className="fw-bold">Follow Us</h5>
+            <div className="d-flex justify-content-center gap-3">
+              <a href="https://facebook.com" className="text-light fs-5">
+                <i className="fab fa-facebook"></i>
+              </a>
+              <a href="https://twitter.com" className="text-light fs-5">
+                <i className="fab fa-twitter"></i>
+              </a>
+              <a href="https://instagram.com" className="text-light fs-5">
+                <i className="fab fa-instagram"></i>
+              </a>
+              <a href="https://linkedin.com" className="text-light fs-5">
+                <i className="fab fa-linkedin"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="mt-3">
+          <p className="small text-muted mb-0">
+            &copy; {new Date().getFullYear()} Blogs. All Rights Reserved.
+          </p>
         </div>
       </div>
     </footer>
   );
 };
+
+export default Footer;
