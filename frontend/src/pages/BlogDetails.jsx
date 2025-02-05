@@ -55,7 +55,14 @@ const BlogDetails = () => {
               </div>
             <div className="mb-4 p-3 bg-light border rounded">
               <h5 className="mb-2">Description</h5>
-              <p className="mb-0 text-muted">{blogDetails?.description}</p>
+              <p className="mb-0 text-muted" style={{ whiteSpace: "pre-line" }}>
+                {blogDetails?.description.split("\n").map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
+              </p>
             </div>
             <div className="d-flex justify-content-between align-items-center">
               {localStorage.getItem("token") ? (
