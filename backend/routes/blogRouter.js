@@ -154,5 +154,30 @@ router.get("/get-all-blogs", async (req, res) => {
     return res.json({ message: error.message });
   }
 });
+router.get("/query", async (req, res) => {
+  try {
+    const { title } = req.query;
+
+    const query = title ? { title: { $regex: title, $options: "i" } } : null;
+    if (!query) {
+      return res.status(400).json({ message: "Please provide an query" });
+    }
+
+    const blog = await Blog.find(query);
+    if (!blog || (Array.isArray(blog) && blog.length === 0)) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    res.status(200).json({
+      message: "Item found",
+      items: blog, // Return as an array if single item
+    });
+  } catch (error) {
+    console.error("Error finding item:", error.message);
+    res
+      .status(500)
+      .json({ message: "Error finding item", error: error.message });
+  }
+});
 
 module.exports = router;
