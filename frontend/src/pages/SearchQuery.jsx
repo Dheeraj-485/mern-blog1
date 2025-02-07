@@ -17,7 +17,7 @@ const SearchResults = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:8000/blog/query?title=${encodeURIComponent(
+          `https://mern-blog1-1-z0ns.onrender.com//blog/query?title=${encodeURIComponent(
             searchQuery
           )}`
         );
