@@ -89,15 +89,17 @@ import SearchResults from "./pages/SearchQuery";
 import Footer from "./pages/Footer";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import "./App.css";
 
 // Layout Component to wrap Navbar, Page Content, and Footer
 const Layout = ({ children }) => {
   return (
-    <>
+    <div className="app-container">
       <Navbar />
-      <div className="main-content">{children}</div> {/* Allows flex-grow */}
+      <div className="main-content flex flex-grow-1">{children}</div>{" "}
+      {/* Allows flex-grow */}
       <Footer />
-    </>
+    </div>
   );
 };
 
