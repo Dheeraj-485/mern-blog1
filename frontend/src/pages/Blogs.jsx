@@ -2,9 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Blog from "./Blog";
 import { BASE_URL } from "../BaseUrl";
+import LoaderBlog from "./LoaderBlog";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function getAllBlogs() {
     const url = `${BASE_URL}blog/get-all-blogs`;
@@ -24,9 +26,9 @@ const Blogs = () => {
   }, []);
   return (
     <div className="container mt-3">
-       <h4 className="d-flex justify-content-center mt-4 mb-4">All Blogs</h4>
-      <div className="d-flex justify-content-around  row row-cols-4">
-      
+      <h4 className="mt-4 mb-4 d-flex justify-content-center">All Blogs</h4>
+
+      <div className="d-flex justify-content-around row row-cols-4">
         {blogs &&
           blogs.map((blog) => (
             <Blog
