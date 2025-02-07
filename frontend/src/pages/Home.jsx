@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Blogs from "./Blogs";
 import HomePage from "../assets/HomePage.png";
 import about from "../assets/about.png";
 import { Link } from "react-router-dom";
+import Loader from "./Loader";
+import { motion } from "framer-motion";
 
+const imageVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 1 } },
+};
 function Home() {
   const isLogin = localStorage.getItem("token");
+  const [isLoading, setIsLoading] = useState(true);
+  const [showBlogs, setShowBlogs] = useState(false);
+
+  // Simulate loading delay
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setShowBlogs(true);
+    }, 2000); // Simulated 2-second loading time
+  }, []);
   return (
     <>
       <div className="container-fluid d-flex flex-column flex-lg-row justify-content-center align-items-center py-5">
@@ -26,12 +42,33 @@ function Home() {
         </div>
 
         <div className="col-lg-6 d-none d-lg-flex justify-content-center align-items-center">
-          <img src={HomePage} alt="Home Page" className="img-fluid" />
+          <motion.img
+            src={HomePage}
+            alt="Home Page"
+            className="img-fluid"
+            variants={imageVariants}
+            initial="hidden"
+            animate="visible"
+          />
         </div>
       </div>
-      <div className="d-flex justify-content-around mx-4">
+      {/* <div className="d-flex justify-content-center mx-4">
+        <Blogs />
+      </div> */}
 
-      <Blogs />
+      {/* Blog Section */}
+      <div className="d-flex justify-content-center mx-4">
+        {isLoading ? (
+          <Loader /> // Show loader while fetching blogs
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }} // Start hidden & move up
+            animate={{ opacity: 1, y: 0 }} // Fade in & move up
+            transition={{ duration: 1, ease: "easeOut" }} // Smooth animation
+          >
+            <Blogs />
+          </motion.div>
+        )}
       </div>
 
       <div
